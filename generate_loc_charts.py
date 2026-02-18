@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Generate bar charts comparing Lines of Code (LOC) across the three engines
+Génère des graphiques à barres comparant les lignes de code (LOC) entre les trois moteurs
 """
 import matplotlib
 matplotlib.use('Agg')  # Use non-interactive backend
@@ -33,7 +33,7 @@ web1_avg = np.mean(web1_locs)
 rdfa_avg = np.mean(rdfa_locs)
 sparql_avg = np.mean(sparql_locs)
 
-print(f"Average LOC - Web 1.0: {web1_avg:.1f}, RDFa: {rdfa_avg:.1f}, SPARQL: {sparql_avg:.1f}")
+print(f"LOC moyen - Web 1.0: {web1_avg:.1f}, RDFa: {rdfa_avg:.1f}, SPARQL: {sparql_avg:.1f}")
 
 # Chart 1: LOC per request for each engine
 fig1, ax1 = plt.subplots(figsize=(14, 7))
@@ -45,9 +45,9 @@ bars1 = ax1.bar(x - width, web1_locs, width, label='Web 1.0', color='#FF6B6B', a
 bars2 = ax1.bar(x, rdfa_locs, width, label='RDFa', color='#4ECDC4', alpha=0.8)
 bars3 = ax1.bar(x + width, sparql_locs, width, label='SPARQL', color='#45B7D1', alpha=0.8)
 
-ax1.set_xlabel('Request / Function', fontsize=12, fontweight='bold')
-ax1.set_ylabel('Lines of Code (LOC)', fontsize=12, fontweight='bold')
-ax1.set_title('Lines of Code Comparison by Request Across Three Engines', fontsize=14, fontweight='bold', pad=20)
+ax1.set_xlabel('Requête / Fonction', fontsize=12, fontweight='bold')
+ax1.set_ylabel('Lignes de code (LOC)', fontsize=12, fontweight='bold')
+ax1.set_title('Comparaison des lignes de code par requête pour les trois moteurs', fontsize=14, fontweight='bold', pad=20)
 ax1.set_xticks(x)
 ax1.set_xticklabels(requests)
 ax1.legend(loc='upper left', fontsize=11)
@@ -67,7 +67,7 @@ add_value_labels(bars3)
 
 plt.tight_layout()
 plt.savefig('loc_per_request_comparison.png', dpi=300, bbox_inches='tight')
-print("[OK] Chart 1 saved: loc_per_request_comparison.png")
+print("[OK] Graphique 1 enregistré: loc_per_request_comparison.png")
 
 # Chart 2: Average LOC per engine
 fig2, ax2 = plt.subplots(figsize=(10, 7))
@@ -78,8 +78,8 @@ colors = ['#FF6B6B', '#4ECDC4', '#45B7D1']
 
 bars = ax2.bar(engines, averages, color=colors, alpha=0.8, width=0.6)
 
-ax2.set_ylabel('Average Lines of Code (LOC)', fontsize=12, fontweight='bold')
-ax2.set_title('Average Lines of Code per Function by Engine', fontsize=14, fontweight='bold', pad=20)
+ax2.set_ylabel('Lignes de code moyennes (LOC)', fontsize=12, fontweight='bold')
+ax2.set_title('Lignes de code moyennes par fonction pour chaque moteur', fontsize=14, fontweight='bold', pad=20)
 ax2.grid(axis='y', alpha=0.3, linestyle='--')
 
 # Add value labels on bars
@@ -90,12 +90,12 @@ for bar, avg in zip(bars, averages):
             ha='center', va='bottom', fontsize=14, fontweight='bold')
 
 # Add a horizontal line for reference
-ax2.axhline(y=np.mean(averages), color='gray', linestyle='--', linewidth=1, alpha=0.5, label=f'Overall Avg: {np.mean(averages):.1f}')
+ax2.axhline(y=np.mean(averages), color='gray', linestyle='--', linewidth=1, alpha=0.5, label=f'Moyenne générale: {np.mean(averages):.1f}')
 ax2.legend(fontsize=10)
 
 plt.tight_layout()
 plt.savefig('average_loc_per_engine.png', dpi=300, bbox_inches='tight')
-print("[OK] Chart 2 saved: average_loc_per_engine.png")
+print("[OK] Graphique 2 enregistré: average_loc_per_engine.png")
 
 # Chart 3: Bonus - Stacked comparison showing LOC distribution
 fig3, ax3 = plt.subplots(figsize=(12, 7))
@@ -120,22 +120,22 @@ p3 = ax3.barh(x_pos, sorted_sparql, width,
 
 ax3.set_yticks(x_pos)
 ax3.set_yticklabels(sorted_requests)
-ax3.set_xlabel('Total Lines of Code (LOC)', fontsize=12, fontweight='bold')
-ax3.set_title('Stacked LOC Comparison: Total Code Required by Request', fontsize=14, fontweight='bold', pad=20)
+ax3.set_xlabel('Lignes de code totales (LOC)', fontsize=12, fontweight='bold')
+ax3.set_title('Comparaison empilée des LOC: Code total requis par requête', fontsize=14, fontweight='bold', pad=20)
 ax3.legend(loc='lower right', fontsize=11)
 ax3.grid(axis='x', alpha=0.3, linestyle='--')
 
 plt.tight_layout()
 plt.savefig('stacked_loc_comparison.png', dpi=300, bbox_inches='tight')
-print("[OK] Bonus Chart 3 saved: stacked_loc_comparison.png")
+print("[OK] Graphique bonus 3 enregistré: stacked_loc_comparison.png")
 
 print("\n" + "="*60)
-print("SUMMARY STATISTICS")
+print("STATISTIQUES RÉSUMÉES")
 print("="*60)
-print(f"Web 1.0   - Average: {web1_avg:.1f} LOC, Min: {min(web1_locs)}, Max: {max(web1_locs)}")
-print(f"RDFa      - Average: {rdfa_avg:.1f} LOC, Min: {min(rdfa_locs)}, Max: {max(rdfa_locs)}")
-print(f"SPARQL    - Average: {sparql_avg:.1f} LOC, Min: {min(sparql_locs)}, Max: {max(sparql_locs)}")
-print(f"\nMost compact: Web 1.0 ({web1_avg:.1f} LOC avg)")
-print(f"Most verbose: SPARQL ({sparql_avg:.1f} LOC avg)")
-print(f"Difference: {sparql_avg - web1_avg:.1f} LOC (+{((sparql_avg - web1_avg)/web1_avg*100):.1f}%)")
+print(f"Web 1.0   - Moyenne: {web1_avg:.1f} LOC, Min: {min(web1_locs)}, Max: {max(web1_locs)}")
+print(f"RDFa      - Moyenne: {rdfa_avg:.1f} LOC, Min: {min(rdfa_locs)}, Max: {max(rdfa_locs)}")
+print(f"SPARQL    - Moyenne: {sparql_avg:.1f} LOC, Min: {min(sparql_locs)}, Max: {max(sparql_locs)}")
+print(f"\nPlus compact: Web 1.0 ({web1_avg:.1f} LOC moy)")
+print(f"Plus verbeux: SPARQL ({sparql_avg:.1f} LOC moy)")
+print(f"Différence: {sparql_avg - web1_avg:.1f} LOC (+{((sparql_avg - web1_avg)/web1_avg*100):.1f}%)")
 print("="*60)
